@@ -8,12 +8,12 @@ from datetime import datetime
 
 if __name__ == "__main__":
 
-    SYMBOL = '600570.XSHG'
+    SYMBOL = '000889'
 
     train_data, price_array, price_df1 = helper.PredictiorGenerator().getData(
-        [SYMBOL], pd.date_range('2018-04-17 13:36:52', '2018-04-17 13:42:44', freq='S'))
+        [SYMBOL], pd.date_range('2018-03-12 10:53:40', '2018-03-12 10:53:40', freq='S'))
     test_data, price_array, price_df2 = helper.PredictiorGenerator().getData(
-        [SYMBOL], pd.date_range('2018-04-17 13:36:52', '2018-04-17 13:42:44', freq='S'))
+        [SYMBOL], pd.date_range('2018-03-12 10:53:40', '2018-03-12 10:53:40', freq='S'))
 
     train_rows = math.floor(train_data.shape[0])
     test_rows = math.floor(test_data.shape[0])
@@ -32,4 +32,5 @@ if __name__ == "__main__":
     # Now Generate Orders Algorithmically based on the predicted values
     orders = orderGenerator.OrderGenerator().generateOrders(price_df1, SYMBOL, predY)
 
-    simulator.simulateMarket('orders.txt', '2018-04-17 13:36:52', '2018-04-17 13:42:44', 'S')
+    simulator.simulateMarket(
+        'orders.txt', '2018-03-12 10:53:40', '2018-03-12 10:53:40', 'S')

@@ -11,15 +11,15 @@ class PredictiorGenerator():
         """Return file path given ticker symbol."""
         return os.path.join(base_dir, "{}.txt".format(str(symbol)))
 
-    def get_current(self, symbols, dates):
-        """Read stock data (current) for given symbols from files."""
+    def get_price(self, symbols, dates):
+        """Read stock data (price) for given symbols from files."""
 
         df = pd.DataFrame(index=dates)
 
         for symbol in symbols:
             df_temp = dataloader.DataLoader().loaddata(self.__symbol_to_path(symbol))
-            df_temp = pd.DataFrame(df_temp, columns={'current'})
-            df_temp = df_temp.rename(columns={'current': symbol})
+            df_temp = pd.DataFrame(df_temp, columns={'price'})
+            df_temp = df_temp.rename(columns={'price': symbol})
             df = df.join(df_temp)
             df = df.dropna()
 
@@ -27,7 +27,7 @@ class PredictiorGenerator():
 
 
     def getData(self, symbols, dates):
-        price_df = self.get_current(symbols, dates)
+        price_df = self.get_price(symbols, dates)
         Y_df = stats.Statistics().Y(price_df).fillna(method='ffill')
         BB_df = stats.Statistics().BollingerBand(price_df).fillna(0)
         V_df = stats.Statistics().Volatility(price_df).fillna(0)

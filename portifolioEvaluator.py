@@ -34,7 +34,7 @@ def compute_portvals(start_date, end_date, orders_file, start_val, frequency):
     symbols = list(set(orders_df["Symbol"]))
 
     # Step 2 : read actual values
-    prices_df = helper.PredictiorGenerator().get_current(
+    prices_df = helper.PredictiorGenerator().get_price(
         symbols, pd.date_range(start_date, end_date, freq = frequency))
 
     # Step 3 : create the matrix of shares
